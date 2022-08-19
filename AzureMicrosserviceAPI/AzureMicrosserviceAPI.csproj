@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<EnableDefaultContentItems>false</EnableDefaultContentItems>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Configurations>Debug;Release;Staging;Development</Configurations>
+	</PropertyGroup>
+		
+	<ItemGroup>
+		<PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
+		<PackageReference Include="Microsoft.IdentityModel.Logging" Version="6.22.0" />
+		<PackageReference Include="Serilog" Version="2.11.0" />
+		<PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.4.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
+	</ItemGroup>
+
+	<Choose>
+		<When Condition="'$(Configuration)' == 'Development'">
+			<ItemGroup>
+				<None Include="appsettings.Development.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+				<None Include="appsettings.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+				<Content Remove="appsettings.*.json;appsettings.json" />
+			</ItemGroup>
+		</When>
+		<When Condition="'$(Configuration)' == 'Staging'">
+			<ItemGroup>
+				<None Include="appsettings.Staging.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+				<None Include="appsettings.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+				<Content Remove="appsettings.*.json;appsettings.json" />
+			</ItemGroup>
+		</When>
+		<Otherwise>
+			<ItemGroup>
+				<None Include="appsettings.Production.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+				<None Include="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+			</ItemGroup>
+		</Otherwise>
+	</Choose>
+
+	<ItemGroup>
+		<Content Include="appsettings.Development.json" />
+		<Content Include="appsettings.Production.json" />
+		<Content Include="appsettings.Staging.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="data\test.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+</Project>
